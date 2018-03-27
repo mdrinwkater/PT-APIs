@@ -15,17 +15,24 @@ class TableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-        
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        
-        if let url = NSURL(string: "https://api.github.com/users/dmathewwws/repos"){
+        guard let url = URL(string: "https://api.github.com/users/shauntc/repos") else {
+            print ("Not a valid URL")
+            return
+        }
             
             
-            let task = NSURLSession.sharedSession().dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
+        let task = URLSession.shared.dataTask(With: url) {(rawData, response, error) in
+            guard error == nil else {
+                print(error!)
+                return
+            }
+            
+            do {
+                let jsonData = try NSJSONSerialization.jsonObject(with:
+                
+            } catch {
+                print("Error serializing JSON")
+            }
                 
                 if let jsonUnformatted = try? NSJSONSerialization.JSONObjectWithData(data!, options: []),
                     let jsonArray = jsonUnformatted as? [[String:AnyObject]]
